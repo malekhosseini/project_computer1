@@ -2,7 +2,6 @@
 #include <fstream>
 using namespace std;
 /// یک شی از نوع فایل خروجی برای ذخیره سازی داده های دانشجویان
-ofstream MyFile("students_data.txt");
 /// @brief این ساختار دیتای یک دانشجو در کد برنامه است
 struct student
 {
@@ -13,29 +12,29 @@ struct student
 };
 /// @brief این تابع برای گرفتن داده های یک دانشجوی جدید از کاربر طراحی شده است
 /// @return اطلاعات یک دانشجوی جدید
-student get_student_data()
+student get_student_data(ofstream& File)
 {
     student New;
     cout<<"inter ID number:";
     cin>>New.id;
-    MyFile<<New.id<<endl;
+    File<<New.id<<endl;
     cout<<"inter name:";
     cin>>New.name;
-    MyFile<<New.name<<endl;
+    File<<New.name<<endl;
     cout<<"inter family:";
     cin>>New.family;
-    MyFile<<New.family<<endl;
+    File<<New.family<<endl;
 
     cout<<"inter physics number:";
     cin>>New.phy;
-    MyFile<<New.phy<<endl;
+    File<<New.phy<<endl;
     cout<<"inter math number:";
     cin>>New.math;
-    MyFile<<New.math<<endl;
+    File<<New.math<<endl;
     cout<<"inter farsi number:";
     cin>>New.fa;
-    MyFile<<New.fa<<endl;
-    MyFile<<endl;
+    File<<New.fa<<endl;
+    File<<endl;
 
     return New;
 }
@@ -60,14 +59,37 @@ float hesab_mid(student data)
     if(data.mid>=19.0)    data.ststus=2;
     return data.mid;
 }
+int menue()
+{
+    int sel=0;
+    system("clear"); 
+    cout<<"Please select a number: "<<endl;
+    cout<<"1  get new data for 10 new student "<<endl;
+    cout<<"2  print mid for students"<<endl;
+    cout<<"3  exit program"<<endl;
+    cin>>sel;
+    return sel;
+}
+void get_save_10_new_data( student data[10])
+{
+    cout<<"Please inter name for a file to store new data:"<<endl;
+    string file_name;
+    cin>>file_name;
+    ofstream MyFile(file_name);
+
+    for(int i=0;i<10;i++)
+    {
+        data[i]=get_student_data(MyFile);
+    }
+    MyFile.close();
+}
 int main()
 {
+    system("clear"); 
     student new_students[10];
-    new_students[0]=get_student_data();
-    new_students[1]=get_student_data();
-    new_students[2]=get_student_data();
-    print_studen_data(new_students[0]);
-    float a=hesab_mid(new_students[0]);
-    cout<<new_students[0].mid<<endl;
+    int sel_men=menue();
+    if(sel_men==1) get_save_10_new_data(new_students);
+    if(sel_men==2){};
+    if(sel_men==3){};
     
 }
